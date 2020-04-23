@@ -60,3 +60,8 @@ int Congratulate (int ***Players, int n);
 //generate
 int * generateArray(int number_of_element);
 int ** generateMatrix ( int row, int col);
+
+
+//Menu
+void OnePlayer( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES] );
+void Menu(int choice, char* suits[], char* faces[], int deck[SUITS][FACES]);

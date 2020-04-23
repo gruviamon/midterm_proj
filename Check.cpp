@@ -26,12 +26,12 @@ int isFullHouse(int** hand) // 6
             {
                 if ( suitsCount[i] == 2 && suitsCount[j] == 3)
                 {
-                    delete[]suitsCount;
+                    free(suitsCount);
                     return 6;
                 }
             }
         }
-    delete[]suitsCount;
+    free(suitsCount);
     return 0;
 }
 
@@ -64,13 +64,13 @@ int isThreeOfAKind(int** hand) //3
             {
                 if (facesCount[i] == 3 && facesCount[j] == 1 && facesCount[k] == 1 )
                 {
-                    delete[]facesCount;
+                    free(facesCount);
                     return 3;
                 }
             }
         }
     }
-    delete[]facesCount;
+    free(facesCount);
     return 0;
 }
 
@@ -86,13 +86,13 @@ int isTwoPairs(int** hand) // 2
                 if (facesCount[i] == 2 && facesCount[j] == 2 && facesCount[k] == 1
                     && i != j && j != k && i != k )
                     {
-                        delete[]facesCount;
+                        free(facesCount);
                         return 2;
                     }
             }
         }
     }
-    delete[]facesCount;
+    free(facesCount);
     return 0;
 }
 
@@ -110,14 +110,14 @@ int isPair(int** hand) // 1
                     if ( facesCount[i] == 2 && facesCount[j] == 1 && facesCount[k] == 1 && facesCount[m] == 1
                          && i != j && j != k && k!= m && i != k && i != m && j != m)
                          {
-                                delete[]facesCount;
+                                free(facesCount);
                                 return 1;
                          }
                 }
             }
         }
     }
-    delete[]facesCount;
+    free(facesCount);
     return 0;
 }
 

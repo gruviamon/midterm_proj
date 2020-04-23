@@ -2,23 +2,16 @@
 
 void shuffleCards(int deck[SUITS][FACES])
 {
-    srand(time(NULL));
     int *checkCards = generateArray(SUITS*FACES);
-    int *p = (int*) deck;
-    for ( int i = 0; i < SUITS*FACES;)
-    {
-        int temp;
-        do
+    for (int i = 0; i < SUITS; i++)
+        for (int j = 0; j < FACES; j++)
         {
-            temp = rand() % ( SUITS*FACES) + 1;
-        } while ((*(checkCards + temp) == 1)); //check if Cards has already existed or not
-
-                *(p + i) = temp; //deck
-                *(checkCards + temp) = 1; //mark that Cards has existed
-
-                i++;
-    }
-    delete[]checkCards;
+            int temp;
+            do temp = rand() % ( SUITS*FACES) + 1; while (checkCards[temp - 1]); //check if Cards has already existed or not
+            deck[i][j] = temp; //deck
+            checkCards[temp - 1] = 1; //mark that Cards has existed
+        }
+    free(checkCards);
 }
 
 void output_matrix (int row, int col, int a[SUITS][FACES] )
