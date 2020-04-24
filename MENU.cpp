@@ -148,6 +148,7 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                     {
                         cout << "Number of play times : ";
                         cin >> s;
+                        cin.ignore();
                         for ( int i = 0; i < s; i++)
                         {
                             cout <<" -------ROUND " << i + 1 << "-------" << endl;
@@ -160,6 +161,10 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                             cout << "=====> Total score of all Players: " << evaluate[0] << " <=====" << endl;
                             cout << "  =====> The winner is: Player " << evaluate[1] << " <=====" << endl;
                             free (evaluate);
+
+
+                            cout << "Press [ENTER] to continue\n";
+                            cin.get();
                         }
                         break;
                     }
