@@ -2,9 +2,9 @@
 
 void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES] )
 {
-    cout << "Your cards are:\n";
+    cout << "Cards are:\n";
     printHand(hand, suits, faces);
-    cout << "You got: ";
+    cout << "\t ==> got: ";
     switch (getStatusOfHand( hand ))
     {
     case 8:
@@ -57,15 +57,17 @@ void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES
     }
 }
 
-void MultiplePlayer( int n, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES] )
+void MultiplePlayer( int*** Players, int n, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES] )
 {
-    shuffleCards(deck);
-    int ***Players = dealingForHands_2(deck, n);
+
     int * ranking = rankingHands(Players, n);
+    cout << "---------- RESULT ----------\n";
     for ( int i = 0; i < n; i++)
     {
-        cout << "Score of player " << i + 1 << ": " << getStatusOfHand(Players[i]) << endl;
-        cout << "==> Ranking of player " << i + 1 << ": " << ranking[i] << endl;
+        cout << "Player " << i + 1 << ": " << endl;
+        OnePlayer(Players[i], suits, faces, deck);
+        cout << "\tScore of player " << i + 1 << ": " << getStatusOfHand(Players[i]) << endl;
+        cout << "\t==> Ranking of player " << i + 1 << ": " << ranking[i] << endl;
     }
     cout << "=====> The winner is: " << Congratulate(ranking, n) << endl;
 }
@@ -73,7 +75,12 @@ void MultiplePlayer( int n, char* suits[SUITS], char* faces[FACES], int deck[SUI
 void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
 {
     cout << "Select Mode:" << endl;
-    cout << "0) Shuffle Cards\n1) 1 PLAYER\n2) MULTI PLAYER\n-1) Exit\n ==> Your Choice: ";
+    cout << "0) Shuffle Cards" << endl;
+    cout << "1) 1 PLAYER" << endl;
+    cout << "2) MULTI PLAYER" << endl;
+    cout << "3) MULTI PLAYER WITH DEALER" << endl;
+    cout << "4) Exit" << endl;
+    cout << " ==> Your Choice: ";
     cin >> choice;
         switch(choice)
         {
@@ -112,26 +119,30 @@ void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
         case 2:
             {
                 int n, s;
-                cout << "Nhap so nguoi choi( <= 10 ): ";
+                cout << "Number of Players( <= 10 ): ";
                 cin >> n;
-                cout << "1) Choi 1 lan\n2) Choi nhieu lan \n ==> Your Choice: ";
+                cout << "1) Play one time\n2) Play multiple times\n3) Exit\n ==> Your Choice: ";
                 cin >> (choice);
                 switch (choice)
                 {
                 case 1:
                     {
-                        MultiplePlayer(n, suits, faces, deck);
+                        shuffleCards(deck);
+                        int ***Players = dealingForHands_2(deck, n);
+                        MultiplePlayer(Players, n, suits, faces, deck);
                         break;
                     }
 
                 case 2:
                     {
-                        cout << "Nhap so lan choi: ";
+                        cout << "Number of play times : ";
                         cin >> s;
                         for ( int i = 0; i < s; i++)
                         {
-                            cout <<"ROUND " << i + 1 << endl;
-                            MultiplePlayer(n, suits, faces, deck);
+                            cout <<" -------ROUND " << i + 1 << "-------" << endl;
+                            shuffleCards(deck);
+                            int ***Players = dealingForHands_2(deck, n);
+                            MultiplePlayer(Players, n, suits, faces, deck);
                         }
                         break;
                     }
@@ -139,6 +150,60 @@ void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                 }
                 break;
             }
-        default: break;
+         case 3:
+            {
+                int n, num;
+                cout << "Number of Players (<= 9) : ";
+                cin >> n;
+                shuffleCards(deck);
+
+                int ***Players = dealingForHands_2(deck, n + 1); // n players + 1 Dealer
+                cout << "Now Dealer's cards are (NOTE: Player " << n+1 << " is the Dealer): " << endl;
+                printHand ( Players[n], suits, faces);
+                cout << "Numbers of Cards that Dealer can exchange (<= 3): " ;
+                cin >> num;
+
+                cout << "1) random replacement\n2) replace to get better situation\n ==> Your choice: ";
+                cin >> choice;
+                switch (choice)
+                {
+                case 1:
+                    {
+                        RandomExchange(Players[n], deck, suits, faces, n + 1, num); // Player[n] is Dealer
+                        cout << "Now Dealer's cards are: " << endl;
+                        printHand ( Players[n], suits, faces);
+
+                        MultiplePlayer(Players, n+1, suits, faces, deck);
+                        break;
+                    }
+
+                case 2:
+                    {
+                        for ( int i = 5*n + 5; i < 5*n + 5 + num; i++)
+                        {
+                            cout << "Now Dealer's cards are: " << endl;
+                            printHand ( Players[n], suits, faces);
+                            Card a = drawCard(i, deck);
+                            cout << "Dealer has just drawn ("<< suits[a.suit] <<", " << faces[a.face] <<") \n";
+                            cout << "Do Dealer wants to keep this card?\n1) Yes\n2) No\n ==> Your choice: ";
+                            cin >> choice;
+                            if ( choice == 1 )
+                            {
+                                int place;
+                                cout << "Choose place of card to exchange: " ;
+                                cin >> place;
+                                Players[n] = exchangeCard(Players[n], a, place);
+                            }
+                        }
+                        cout << "Now Dealer's cards are: " << endl;
+                        printHand ( Players[n], suits, faces);
+
+                        MultiplePlayer(Players, n+1, suits, faces, deck);
+                        break;
+                    }
+                }
+
+            }
+
         }
 }

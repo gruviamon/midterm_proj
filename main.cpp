@@ -10,13 +10,16 @@ int main()
 
     int deck[SUITS][FACES] ;
 
-    int choice;
+     int choice;
     cout << "--- WELCOME TO THE PLAY CARDS GAME ---" << endl;
-    shuffleCards(deck);
+
+        shuffleCards(deck);
     do
     {
        Menu(choice, suits, faces, deck);
-    }  while(choice >= 0);
+    }  while (choice != 4);
+
+
 
 
 }

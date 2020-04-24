@@ -69,3 +69,4 @@ void Menu(int choice, char* suits[], char* faces[], int deck[SUITS][FACES]);
 ///////
 Card drawCard(int card, int deck[SUITS][FACES]);
 int** exchangeCard( int ** hand, Card a, int place );
+void RandomExchange(int ** hand, int deck[SUITS][FACES], char*suits[SUITS], char*face[FACES], int n, int NumofCardtoExchange);
