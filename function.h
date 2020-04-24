@@ -8,10 +8,10 @@ const int FACES = 13;
 const int CARDS = 52;
 const int HANDS = 5;
 
-struct Cards_Element
+struct Card
 {
-    int Suit;
-    int Rank;
+    int suit;
+    int face;
 };
 
 void REMEMBER_TO_DELETE_IT(int deck[SUITS][FACES]);
@@ -55,13 +55,17 @@ int*** dealingForHands_2(int deck[SUITS][FACES], int n);
 int getStatusOfHand(int** hand);
 int* rankingHands(int*** hands, int n);
 int* evaluateHands(int s, int ***Players, int height, int row, int col);
-int Congratulate (int ***Players, int n);
+int Congratulate (int *ranking, int n);
 
 //generate
 int * generateArray(int number_of_element);
 int ** generateMatrix ( int row, int col);
 
-
 //Menu
 void OnePlayer( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES] );
 void Menu(int choice, char* suits[], char* faces[], int deck[SUITS][FACES]);
+
+
+///////
+Card drawCard(int card, int deck[SUITS][FACES]);
+int** exchangeCard( int ** hand, Card a, int place );

@@ -53,10 +53,7 @@ void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES
             cout << "The hightest card is the " << getHighestCard(hand) << "card" << endl;
             break;
         }
-    default:
-        {
-            cout << "Nothing " << getStatusOfHand(hand);
-        }
+    default: break;
     }
 }
 
@@ -70,13 +67,13 @@ void MultiplePlayer( int n, char* suits[SUITS], char* faces[FACES], int deck[SUI
         cout << "Score of player " << i + 1 << ": " << getStatusOfHand(Players[i]) << endl;
         cout << "==> Ranking of player " << i + 1 << ": " << ranking[i] << endl;
     }
-    cout << "=====> The winner is: " << Congratulate(Players, n) << endl;
+    cout << "=====> The winner is: " << Congratulate(ranking, n) << endl;
 }
 
 void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
 {
     cout << "Select Mode:" << endl;
-    cout << "0) Shuffle Cards\n1) 1 PLAYER\n2) MULTI PLAYER\n ==> Your Choice: ";
+    cout << "0) Shuffle Cards\n1) 1 PLAYER\n2) MULTI PLAYER\n-1) Exit\n ==> Your Choice: ";
     cin >> choice;
         switch(choice)
         {
@@ -110,6 +107,7 @@ void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                         break;
                     }
                 }
+                break;
             }
         case 2:
             {
@@ -123,6 +121,7 @@ void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                 case 1:
                     {
                         MultiplePlayer(n, suits, faces, deck);
+                        break;
                     }
 
                 case 2:
@@ -134,8 +133,12 @@ void Menu( int choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                             cout <<"ROUND " << i + 1 << endl;
                             MultiplePlayer(n, suits, faces, deck);
                         }
+                        break;
                     }
+
                 }
+                break;
             }
+        default: break;
         }
 }
