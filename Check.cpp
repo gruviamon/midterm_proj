@@ -5,11 +5,12 @@
 int* generate_suitsCount (int **hand)
 {
     char* suits[SUITS] = {"Hearts", "Diamonds", "Clubs", "Spades"};
-    int *suitsCount = generateArray(SUITS);
+    int * suitsCount = generateArray(SUITS);
     for ( int i = 0; i < HANDS; i++ ) //count
     {
         for ( int j = 0; j < SUITS; j++ )
         {
+            //cout << hand[0][i] << ' ' << j << endl;
             if ( suits[ hand[0][i] ] == suits[j] )
             {
                 suitsCount[j]++;
@@ -28,7 +29,7 @@ int* generate_facesCount (int **hand)
     {
         for ( int j = 0; j < FACES; j++ )
         {
-            if ( faces[ hand[0][i] ] == faces[j] )
+            if ( faces[ hand[1][i] ] == faces[j] )
             {
                 facesCount[j]++;
             }
@@ -36,40 +37,24 @@ int* generate_facesCount (int **hand)
     }
     return facesCount;
 }
-int **Copy(int **a)
+int *Copy(int *a)
 {
-    int ** copy_a = generateMatrix(2, HANDS);
-    for ( int i = 0; i < 2; i++)
+    int * copy_a = generateArray(HANDS);
+    for ( int i = 0; i < HANDS; i++)
     {
-        for ( int j = 0; j < HANDS; j++)
-        {
-            *(*(copy_a + i) + j) = *(*(a + i) + j) ;
-        }
+        copy_a[i] = a[i] ;
     }
 
     return copy_a;
 }
 
-void deleteCopy (int **Copy)
-{
-    for ( int i = 0; i < HANDS; i++)
-        delete []Copy[i];
-    delete[]Copy;
-}
 
-void sort_FacesAscending (int **hand)
+void sort_FacesAscending (int *hand)
 {
     for ( int i = 0; i < HANDS - 1; i++)
-    {
         for ( int j = i + 1; j < HANDS; j++)
-        {
-            if (hand[1][i] > hand[1][j])
-            {
-                swap(hand[0][i] , hand[0][j]);
-                swap(hand[1][i] , hand[1][j]);
-            }
-        }
-    }
+            if (hand[i] > hand[j])
+                swap(hand[i] , hand[j]);
 }
 
 int checkFlush(int** hand) // 5
@@ -77,26 +62,31 @@ int checkFlush(int** hand) // 5
     int *suitsCount = generate_suitsCount(hand);
     for ( int i = 0; i < SUITS; i++ )
     {
-        if (suitsCount[i] == 5 ) return 5; // true
+        if (suitsCount[i] == 5 )
+        {
+            free(suitsCount);
+            return 5;
+        }
     }
+    free(suitsCount);
     return 0;
 }
 
 int checkStraight(int** hand) // 4
 {
-    int **hand_copy = Copy(hand);
+    int *faces_copy = Copy(hand[1]);
 
-    sort_FacesAscending(hand_copy);
+    sort_FacesAscending(faces_copy);
 
-    for ( int i = 0; i < 5 - 1; i++ )
+    for ( int i = 0; i < HANDS - 1; i++ )
     {
-        if ( hand_copy[1][i+1] - hand_copy[1][i]  != 1 )
+        if ( faces_copy[i+1] - faces_copy[i]  != 1 )
         {
-            deleteCopy(hand_copy);
+            free(faces_copy);
             return 0; // false
         }
     }
-    deleteCopy(hand_copy);
+    free(faces_copy);
     return 4;
 }
 
@@ -129,34 +119,34 @@ int getHighestCard(int** hand)
 
 int isFourOfAKind(int** hand) // 7
 {
-    int *suitsCount = generate_suitsCount(hand);
-    for ( int i = 0; i < SUITS; i++ )
+    int *facesCount = generate_facesCount(hand);
+    for ( int i = 0; i < FACES; i++ )
     {
-        if (suitsCount[i] == 4)
+        if (facesCount[i] == 4)
         {
-            delete []suitsCount;
+            delete []facesCount;
             return 7; // true
         }
     }
-    delete []suitsCount;
+    delete []facesCount;
     return 0;
 }
 
 int isFullHouse(int** hand) // 6
 {
-    int *suitsCount = generate_suitsCount(hand);
-    for ( int i = 0; i < SUITS; i++ ) //check
+    int *facesCount = generate_facesCount(hand);
+    for ( int i = 0; i < FACES - 1; i++ ) //check
         {
-            for ( int j = 0; j < SUITS; j++ )
+            for ( int j = i + 1; j < FACES; j++ )
             {
-                if ( suitsCount[i] == 2 && suitsCount[j] == 3 && i != j )
+                if ( (facesCount[i] == 2 && facesCount[j] == 3) || (facesCount[i] == 3 && facesCount[j] == 2) )
                 {
-                    free(suitsCount);
+                    free(facesCount);
                     return 6;
                 }
             }
         }
-    free(suitsCount);
+    free(facesCount);
     return 0;
 }
 

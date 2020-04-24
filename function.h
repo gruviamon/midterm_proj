@@ -14,8 +14,6 @@ struct Card
     int face;
 };
 
-void REMEMBER_TO_DELETE_IT(int deck[SUITS][FACES]);
-
 //ShuffleCards
 void shuffleCards(int deck[SUITS][FACES]);
 void output_matrix (int row, int col, int a[SUITS][FACES] );
@@ -40,9 +38,8 @@ int isPair(int** hand);             // 1
 int* generate_suitsCount (int **hand);
 int* generate_facesCount (int **hand);
 
-void deleteCopy (int **Copy);
-int **Copy(int **a);
-void sort_FacesAscending (int **hand);
+int *Copy(int *a);
+void sort_FacesAscending (int *hand);
 
 int checkFlush(int** hand);
 int checkStraight(int** hand);
@@ -54,7 +51,7 @@ int getHighestCard(int** hand);
 int*** dealingForHands_2(int deck[SUITS][FACES], int n);
 int getStatusOfHand(int** hand);
 int* rankingHands(int*** hands, int n);
-int* evaluateHands(int s, int ***Players, int height, int row, int col);
+int* evaluateHands(int ***PLayers, int *ranking, int height, int row, int col);
 int Congratulate (int *ranking, int n);
 
 //generate
@@ -63,10 +60,11 @@ int ** generateMatrix ( int row, int col);
 
 //Menu
 void OnePlayer( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES] );
-void Menu(int choice, char* suits[], char* faces[], int deck[SUITS][FACES]);
+void Menu(int &choice, char* suits[], char* faces[], int deck[SUITS][FACES]);
+void MultiplePlayer( int*** Players, int n, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES] );
 
-
-///////
+//Dealer
 Card drawCard(int card, int deck[SUITS][FACES]);
 int** exchangeCard( int ** hand, Card a, int place );
 void RandomExchange(int ** hand, int deck[SUITS][FACES], char*suits[SUITS], char*face[FACES], int n, int NumofCardtoExchange);
+

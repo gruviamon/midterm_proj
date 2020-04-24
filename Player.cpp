@@ -68,15 +68,13 @@ int ** generateMatrix ( int row, int col)
 
 int** dealingForHands(int deck[SUITS][FACES])
 {
-    shuffleCards(deck);
-
-    int ** result = generateMatrix(2, HANDS);
+    int ** result = generateMatrix(2, 5);
     int hand = 0;
     int temp;
     int *checktemp = generateArray(CARDS);
     while (hand < HANDS)
     {
-        do temp = rand() % ( SUITS*FACES) + 1; while (checktemp[temp - 1]);
+        do temp = rand() % (SUITS*FACES) + 1; while (checktemp[temp - 1]);
         for ( int i = 0; i < SUITS; i++)
         {
             for ( int j = 0; j < FACES; j++)
@@ -95,10 +93,11 @@ int** dealingForHands(int deck[SUITS][FACES])
     return result;
 }
 
-void printHand(int** hand, char* suits[SUITS], char* faces[FACES])
+void printHand(int** hand, char* suits[], char* faces[])
 {
-        for ( int i = 0; i < HANDS; i++)
-           cout << '(' << suits[hand[0][i]] << ',' << faces[hand[1][i]] << ')' << endl;
+        for ( int i = 0; i < 5; i++)
+           cout << i << ". (" << suits[hand[0][i]] << ", " << faces[hand[1][i]] << ')' << endl;
+           //cout << '(' << hand[i][0] << ', ' << hand[i][1] << ')' << endl;
 }
 
 int** createHandTest(int deck[SUITS][FACES], int a[HANDS])
@@ -174,19 +173,14 @@ int* rankingHands(int*** hands, int n) //hands [HANDS][SUITS][FACES]
     return RANKS;
 }
                                              //n         SUITS    FACES
-int* evaluateHands(int s, int ***Players, int height, int row, int col)
+int* evaluateHands(int ***Players, int *ranking, int height, int row, int col)
 {
-    int * TotalScore = generateArray(s);
-    for ( int i = 0; i < s; i++)
-    {
-        for ( int j = 0; j < height; j++)
-        {
-            TotalScore[i] += getStatusOfHand(Players[j]);
-        }
-    }
-    int * ranking = rankingHands(Players, height);
-    Congratulate(ranking, height);
-    return TotalScore;
+    int *evaluate = generateArray(2);
+    for ( int i = 0; i < height; i++)
+        evaluate[0] += getStatusOfHand(Players[i]); // Score of n players
+    evaluate[1] = Congratulate(ranking, height);
+
+    return evaluate;
 }
 
 int Congratulate (int *ranking, int n)
