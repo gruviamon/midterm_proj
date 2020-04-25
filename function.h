@@ -51,8 +51,7 @@ int getHighestCard(int** hand);
 int*** dealingForHands_2(int deck[SUITS][FACES], int n);
 int getStatusOfHand(int** hand);
 int* rankingHands(int*** hands, int n);
-int* evaluateHands(int ***PLayers, int *ranking, int height, int row, int col);
-int Congratulate (int *ranking, int n);
+int* evaluateHands(int *evaluate, int ***Players, int n);
 
 //generate
 int * generateArray(int number_of_element);

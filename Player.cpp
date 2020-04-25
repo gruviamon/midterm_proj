@@ -160,39 +160,18 @@ int* rankingHands(int*** hands, int n) //hands [HANDS][SUITS][FACES]
     while (status >= 0 && Rank <= n)
     {
         for ( int i = 0; i < n; i++)
-        {
             if ( getStatusOfHand(hands[i]) == status )
-            {
                 RANKS[i] = Rank++ ;
-            }
-        }
-
         status--;
     }
 
     return RANKS;
 }
-                                             //n         SUITS    FACES
-int* evaluateHands(int ***Players, int *ranking, int height, int row, int col)
-{
-    int *evaluate = generateArray(2);
-    for ( int i = 0; i < height; i++)
-        evaluate[0] += getStatusOfHand(Players[i]); // Score of n players
-    evaluate[1] = Congratulate(ranking, height);
 
-    return evaluate;
-}
-
-int Congratulate (int *ranking, int n)
+int* evaluateHands(int *evaluate, int ***Players, int n)
 {
     for ( int i = 0; i < n; i++)
-    {
-        if (ranking[i] == 1)
-        {
-            free (ranking);
-            return i + 1;
-        }
-    }
-    return 0;
+        evaluate[i] += getStatusOfHand(Players[i]);
+    return evaluate;
 }
 

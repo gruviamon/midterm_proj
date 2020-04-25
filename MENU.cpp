@@ -50,7 +50,7 @@ void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES
     case 0:
         {
             cout << "None "<< endl;
-            cout << "The hightest card is the " << getHighestCard(hand) << " card" << endl;
+            cout << "\t The hightest card: " << getHighestCard(hand) << endl;
             break;
         }
     default: break;
@@ -61,19 +61,17 @@ void MultiplePlayer( int*** Players, int n, char* suits[SUITS], char* faces[FACE
 {
 
     int * ranking = rankingHands(Players, n);
-    cout << "-------------------- RESULT --------------------\n";
+    cout << "-------------------- RESULT --------------------\n\n";
     for ( int i = 0; i < n; i++)
     {
         cout << "Player " << i + 1 << ": " << endl;
         OnePlayer(Players[i], suits, faces, deck);
     }
 
+    cout << "*** Ranking of players *** \n";
     for ( int i = 0; i < n; i++)
-    {
-        cout << "\tScore of player " << i + 1 << ": " << getStatusOfHand(Players[i]) << endl;
-        cout << "\t==> Ranking of player " << i + 1 << ": " << ranking[i] << endl;
-    }
-
+        cout << i + 1 << ") Player " << ranking[i] << " (Score = " << getStatusOfHand(Players[i]) << ") " << endl;
+    free(ranking);
 }
 
 void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
@@ -84,7 +82,7 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
     cout << "2) 1 PLAYER" << endl;
     cout << "3) MULTIPLE-PLAYER" << endl;
     cout << "4) MULTIPLE-PLAYER WITH DEALER" << endl;
-    cout << "The Rest) Exit" << endl;
+    cout << "Other numbers) Exit" << endl;
     cout << " ==> Your Choice: ";
 
     cin >> choice;
@@ -103,7 +101,11 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
             }
         case 2:
             {
-                cout << "Select Mode:\n1) Random Hand Test\n2) Input Hand Test\n ==> Your Choice: ";
+                cout << "Select Mode:" << endl;
+                cout << "1) Random Hand Test" << endl;
+                cout << "2) Input Hand Test" << endl;
+                cout << "Other numbers) Exit" << endl;
+                cout << " ==> Your Choice: " ;
                 cin >> choice;
                 switch (choice)
                 {
@@ -132,7 +134,10 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                 int n, s;
                 cout << "Number of Players( <= 10 ): ";
                 cin >> n;
-                cout << "1) Play one time\n2) Play multiple times(Cards will be shuffled automatically each time)\n3) Exit\n ==> Your Choice: ";
+                cout << "1) Play one time" << endl;
+                cout << "2) Play multiple times (Cards will be shuffled automatically each time)" << endl;
+                cout << "Other numbers) Exit" << endl;
+                cout << " ==> Your Choice: " ;
                 cin >> (choice);
                 switch (choice)
                 {
@@ -149,30 +154,41 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                         cout << "Number of play times : ";
                         cin >> s;
                         cin.ignore();
+                        int *evaluate = generateArray(n);
                         for ( int i = 0; i < s; i++)
                         {
                             cout <<" -------ROUND " << i + 1 << "-------" << endl;
                             shuffleCards(deck); // NOTE THIS !!!!
+
                             int ***Players = dealingForHands_2(deck, n);
                             MultiplePlayer(Players, n, suits, faces, deck);
+                            evaluate = evaluateHands(evaluate, Players, n);
 
-                            int* ranking = rankingHands(Players, n);
-                            int *evaluate = evaluateHands(Players, ranking, n, SUITS, FACES);
-                            cout << "=====> Total score of all Players: " << evaluate[0] << " <=====" << endl;
-                            cout << "  =====> The winner is: Player " << evaluate[1] << " <=====" << endl;
-                            free (evaluate);
-
-
-                            cout << "Press [ENTER] to continue\n";
+                            cout << "\nPress [ENTER] to continue\n";
                             cin.get();
+
+                            if ( i == (s - 1) )
+                            {
+                                int MaxScore = maxArray(evaluate, n);
+                                for ( int j = 0; j < n; j++)
+                                    cout << "***** Total score of Player " << j + 1 << ": " << evaluate[j] << endl;
+
+                                cout << "=======> The WINNER(s) is/ are: ";
+                                for ( int j = 0; j < n; j++)
+                                    if (evaluate[j] == MaxScore)
+                                        cout << "Player " << j + 1 << " " ;
+                                cout << endl;
+                            }
+
                         }
+                        free (evaluate);
                         break;
                     }
 
                 }
                 break;
             }
-         case 4:
+        case 4:
             {
                 int n, num;
                 cout << "Number of Players (<= 9) : ";
@@ -217,7 +233,7 @@ void Menu( int &choice, char* suits[], char* faces[], int deck[SUITS][FACES] )
                                     Players[n] = exchangeCard(Players[n], a, place);
                                 }
                             }
-                            cout << "END OF CHANGING\nNow Dealer's cards are: " << endl;
+                            cout << "*** END OF CHANGING ***\nNow Dealer's cards are: " << endl;
                             printHand ( Players[n], suits, faces);
                             break;
                         }
