@@ -26,7 +26,7 @@ int** exchangeCard( int ** hand, Card a, int place )
 
 void RandomExchange(int ** hand, int deck[SUITS][FACES], char*suits[SUITS], char*faces[FACES], int n, int NumofCardtoExchange)
 {
-    for ( int i = 5*n; i < 5*n + NumofCardtoExchange; i++ )
+    for ( int i = 5*n + 1; i < 5*n + 1 + NumofCardtoExchange; i++ )
     {
         cout << "Now Dealer's card are: " << endl;
         printHand ( hand, suits, faces);
