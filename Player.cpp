@@ -96,7 +96,7 @@ int** dealingForHands(int deck[SUITS][FACES])
 void printHand(int** hand, char* suits[], char* faces[])
 {
         for ( int i = 0; i < 5; i++)
-           cout << i << ". (" << suits[hand[0][i]] << ", " << faces[hand[1][i]] << ')' << endl;
+           cout << "\t" << i << ". (" << suits[hand[0][i]] << ", " << faces[hand[1][i]] << ')' << endl;
            //cout << '(' << hand[i][0] << ', ' << hand[i][1] << ')' << endl;
 }
 
@@ -165,7 +165,7 @@ int* rankingHands(int*** hands, int n) //hands [HANDS][SUITS][FACES]
         status--;
     }
 
-    return RANKS;
+    return RANKS; // 1 = player having the highest score, ... i =  ..., n = player having the lowest score
 }
 
 int* evaluateHands(int *evaluate, int ***Players, int n)
