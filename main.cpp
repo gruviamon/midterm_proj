@@ -5,10 +5,8 @@ int main()
     char* suits[SUITS] = {"Hearts", "Diamonds", "Clubs", "Spades"};
     char* faces[FACES] = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
     int deck[SUITS][FACES];
-    srand(time(NULL));
-    for ( int i = 0; i < CARDS; i++) deck[i / CARDS][i % CARDS] = i + 1;
     int choice;
-    //shuffleCards(deck);
+    shuffleCards(deck);
 
     do
     {
