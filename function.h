@@ -72,4 +72,4 @@ void VoluntaryExchange(int ** hand, char* suits[], char* faces[], int deck[SUITS
 void changeCards(int **hand, int deck[SUITS][FACES], char*suits[SUITS], char*faces[FACES], int numofPlayers, string name);
 int** dealingForHands_Dealer(int choice, int deck[SUITS][FACES]);
 int** dealingForHands_Playler(int **Dealer, int deck[SUITS][FACES]);
-bool matrixequal(int **a, int **b, int row, int col);
+bool checkSameCard(Card a, int **b, int deck[SUITS][FACES]);

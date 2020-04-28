@@ -122,16 +122,19 @@ int** dealingForHands_Dealer(int choice, int deck[SUITS][FACES])
     return hands;
 }
 
-bool matrixequal(int **a, int **b, int row, int col)
+bool checkSameCard(int **a, int **b, int deck[SUITS][FACES])
 {
-    for ( int i = 0; i < row*col; i++)
-        if (a[i] != b[i]) return false;
+    for ( int i = 0; i < HANDS; i++)
+        for ( int j = 0; j < HANDS; j++)
+            if ( deck[ a[0][i] ][ a[1][i] ] == deck[ a[0][j] ][ a[1][j] ]) return false;
     return true;
 }
 
 int** dealingForHands_Playler(int **Dealer, int deck[SUITS][FACES])
 {
-    int **Player;
-    do Player = dealingForHands(deck); while (matrixequal(Player, Dealer, 2, 5)); // check if there are same cards
+    int **Player = generateMatrix(2,5);
+    do {
+        Player = dealingForHands(deck);
+    } while (checkSameCard(Player, Dealer, deck));
     return Player;
 }
