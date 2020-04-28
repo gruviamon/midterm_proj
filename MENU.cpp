@@ -59,8 +59,6 @@ void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES
 
 void MultiplePlayer( int*** Players, int numsofPlayers, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES], int hasDealer)
 {
-
-    int * ranking = rankingHands(Players, numsofPlayers);
     cout << "-------------------- RESULT ---------------------\n\n";
     for ( int i = 0; i < numsofPlayers; i++)
     {
@@ -69,7 +67,7 @@ void MultiplePlayer( int*** Players, int numsofPlayers, char* suits[SUITS], char
         cout << ": \n";
         OnePlayer(Players[i], suits, faces, deck);
     }
-
+    int * ranking = rankingHands(Players, numsofPlayers);
     cout << "\n*** Ranking of players *** \n";
     for ( int i = 1; i < numsofPlayers + 1; i++)
     {
