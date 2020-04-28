@@ -132,7 +132,7 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                 case 2:
                     {
                         int a[HANDS];
-                        cout << "Insert 5 cards order :";
+                        cout << "Insert 5 cards order: ";
                         for ( int i = 0; i < HANDS; i++)
                             cin >> a[i];
                         int **Hand = createHandTest(deck, a);
@@ -233,6 +233,7 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                 cout << "\nPress any key to see the result\n";
                 system("pause");
                 MultiplePlayer(Players, 2, suits, faces, deck, 1); //has dealer
+                if (getStatusOfHand(Players[0]) == getStatusOfHand(Players[1])) cout << "\tIt's a tie\n";
                 break;
             }
         default:

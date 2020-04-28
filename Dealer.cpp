@@ -126,8 +126,8 @@ bool checkSameCard(int **a, int **b, int deck[SUITS][FACES])
 {
     for ( int i = 0; i < HANDS; i++)
         for ( int j = 0; j < HANDS; j++)
-            if ( deck[ a[0][i] ][ a[1][i] ] == deck[ a[0][j] ][ a[1][j] ]) return false;
-    return true;
+            if ( deck[ a[0][i] ][ a[1][i] ] == deck[ b[0][j] ][ b[1][j] ]) return true;
+    return false;
 }
 
 int** dealingForHands_Playler(int **Dealer, int deck[SUITS][FACES])

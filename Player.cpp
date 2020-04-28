@@ -47,8 +47,6 @@ void printCards(int deck[SUITS][FACES], char* suits[], char* faces[])
     }
 }
 
-
-
 int * generateArray(int number_of_element)
 {
     int* Array = (int*) calloc (number_of_element, sizeof(int));
@@ -174,4 +172,3 @@ int* evaluateHands(int *evaluate, int ***Players, int n)
         evaluate[i] += getStatusOfHand(Players[i]);
     return evaluate;
 }
-

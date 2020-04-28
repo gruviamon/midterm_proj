@@ -122,7 +122,7 @@ int isFourOfAKind(int** hand) // 7
     int *facesCount = generate_facesCount(hand);
     for ( int i = 0; i < FACES; i++ )
     {
-        if (facesCount[i] == 4)
+        if (facesCount[i] == 4) // 4 cards of ONE rank
         {
             delete []facesCount;
             return 7; // true
