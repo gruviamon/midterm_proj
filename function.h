@@ -16,7 +16,6 @@ struct Card
 
 //ShuffleCards
 void shuffleCards(int deck[SUITS][FACES]);
-void output_matrix (int row, int col, int a[SUITS][FACES] );
 void printCards(int deck[SUITS][FACES], char* suits[], char* faces[]);
 
 //OnePlayer

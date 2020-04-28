@@ -7,7 +7,6 @@ int main()
     int deck[SUITS][FACES];
     srand(time(NULL));
     for ( int i = 0; i < CARDS; i++) deck[i / CARDS][i % CARDS] = i + 1;
-    output_matrix(4, 13, deck);
     int choice;
     //shuffleCards(deck);
 
