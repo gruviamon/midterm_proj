@@ -57,25 +57,29 @@ void OnePlayer ( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES
     }
 }
 
-void MultiplePlayer( int*** Players, int n, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES] )
+void MultiplePlayer( int*** Players, int numsofPlayers, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES], int hasDealer)
 {
 
-    int * ranking = rankingHands(Players, n);
-    cout << "-------------------- RESULT --------------------\n\n";
-    for ( int i = 0; i < n; i++)
+    int * ranking = rankingHands(Players, numsofPlayers);
+    cout << "-------------------- RESULT ---------------------\n\n";
+    for ( int i = 0; i < numsofPlayers; i++)
     {
-        cout << "Player " << i + 1 << ": " << endl;
+        cout << "Player " << i + 1 ;
+        if (i == numsofPlayers - 1 && hasDealer) cout << " (Dealer) ";
+        cout << ": \n";
         OnePlayer(Players[i], suits, faces, deck);
     }
 
-    cout << "*** Ranking of players *** \n";
-    for ( int i = 1; i < n + 1; i++)
+    cout << "\n*** Ranking of players *** \n";
+    for ( int i = 1; i < numsofPlayers + 1; i++)
     {
-        for ( int j = 0; j < n; j++)
+        for ( int j = 0; j < numsofPlayers; j++)
         {
             if (ranking[j] == i)
             {
-                cout << "\t" << ranking[j] << ") Player " << j + 1 << " (Score = " << getStatusOfHand(Players[j]) << ") " << endl;
+                cout << "\t" << ranking[j] << ") Player " << j + 1 << " (Score = " << getStatusOfHand(Players[j]) << ") " ;
+                if (j == numsofPlayers - 1 && hasDealer) cout << "(Dealer) ";
+                cout << endl;
             }
         }
     }
@@ -155,7 +159,7 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                     {
                         //shuffleCards(deck);
                         int ***Players = dealingForHands_2(deck, n);
-                        MultiplePlayer(Players, n, suits, faces, deck);
+                        MultiplePlayer(Players, n, suits, faces, deck, 0); //dont have dealer => there are n players
                         break;
                     }
 
@@ -167,34 +171,35 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                         int *evaluate = generateArray(n);
                         for ( int i = 0; i < s; i++)
                         {
-                            cout <<" -------ROUND " << i + 1 << "-------" << endl;
+                            cout <<"-------------------- ROUND " << i + 1 << " --------------------" << endl;
                             shuffleCards(deck); // NOTE THIS !!!!
 
                             int ***Players = dealingForHands_2(deck, n);
-                            MultiplePlayer(Players, n, suits, faces, deck);
+                            MultiplePlayer(Players, n, suits, faces, deck, 0); //dont have dealer => there are n players
                             evaluate = evaluateHands(evaluate, Players, n);
-
-                            cout << "\nPress [ENTER] to continue\n";
-                            cin.get();
-
+                            system("pause");
                             if ( i == (s - 1) )
                             {
+                                cout << "\nPress any key to see the final result\n";
+                                system("pause");
+                                cout << "--------------------- SUMMARY ---------------------\n";
                                 int MaxScore = maxArray(evaluate, n);
-                                for ( int j = 0; j < n; j++)
-                                    cout << "***** Total score of Player " << j + 1 << ": " << evaluate[j] << endl;
-
+                                for ( int k = maxArray(evaluate, n); k >= 0; k--) // output by descending order of evaluate array
+                                {
+                                    for ( int j = 0; j < n; j++)
+                                        if ( k == evaluate[j] )
+                                            cout << "\tTotal score of Player " << j + 1 << ": " << evaluate[j] << endl;
+                                }
                                 cout << "=======> The WINNER(s) is/ are: ";
                                 for ( int j = 0; j < n; j++)
                                     if (evaluate[j] == MaxScore)
                                         cout << "Player " << j + 1 << " " ;
                                 cout << endl;
                             }
-
                         }
                         free (evaluate);
                         break;
                     }
-
                 }
                 break;
             }
@@ -207,7 +212,9 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                 int ***Players = dealingForHands_2(deck, n + 1); // n players + 1 Dealer
                 cout << "(NOTE: Player " << n + 1 << " is the Dealer) \n";
                 changeCards(Players[n], deck, suits, faces, n + 1, "Dealer"); //there are n+1 players
-                MultiplePlayer(Players, n + 1, suits, faces, deck);
+                cout << "\nPress any key to see the result\n";
+                system("pause");
+                MultiplePlayer(Players, n + 1, suits, faces, deck, 1); //has dealer
                 break;
             }
         case 5:
@@ -223,12 +230,14 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
                 Players[0] = dealingForHands_Playler(Players[1], deck); //Player_Hand
                 cout << "(NOTE: Player 1 is you, Player 2 is the Dealer) \n";
                 changeCards(Players[0], deck, suits, faces, 2, "Player"); //there are 2 players
-                MultiplePlayer(Players, 2, suits, faces, deck);
+                cout << "\nPress any key to see the result\n";
+                system("pause");
+                MultiplePlayer(Players, 2, suits, faces, deck, 1); //has dealer
                 break;
             }
         default:
             {
-                cout << "SEE YOU NEXT TIME";
+                cout << "\t\t  THANK YOU FOR PLAYING!!!\n\t\t\t SEE YOU NEXT TIME\n";
                 break;
             }
         }

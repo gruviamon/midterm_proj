@@ -8,13 +8,15 @@ int main()
     srand(time(NULL));
 
     int choice;
-    cout << "--- WELCOME TO THE PLAY CARDS GAME ---" << endl;
     shuffleCards(deck);
 
     do
     {
-       Menu(choice, suits, faces, deck);
-    }  while (choice >= 0 && choice < 5);
+        cout << "--- WELCOME TO THE PLAY CARDS GAME ---" << endl;
+        Menu(choice, suits, faces, deck);
+        system("pause");
+        system("cls");
+    } while (choice >= 0 && choice < 5);
     return 0;
 }
 

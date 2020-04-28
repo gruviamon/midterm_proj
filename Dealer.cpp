@@ -28,24 +28,22 @@ void RandomExchange(int ** hand, char* suits[], char* faces[], int deck[SUITS][F
 {
     for ( int i = 5*n + 1; i < 5*n + 1 + NumofCardtoExchange; i++ )
     {
-        cout << "Now " << name <<"'s card are: " << endl;
-        printHand(hand, suits, faces);
+
         Card a = drawCard(i, deck);
         int place;
         cout << "Choose place of card to exchange: ";
         cin >> place;
         hand = exchangeCard(hand, a, place);
+        if ( i == 5*n + NumofCardtoExchange) cout << "***END OF CHANGING***\n";
+        cout << "Now " << name <<"'s card are: " << endl;
+        printHand(hand, suits, faces);
     }
-    cout << "END OF CHANGING\nNow " << name <<"'s cards are: " << endl;
-    printHand (hand, suits, faces);
 }
 
 void VoluntaryExchange(int ** hand, char* suits[], char* faces[], int deck[SUITS][FACES], int n, int NumofCardtoExchange, string name)
 {
     for ( int i = 5*n + 1; i < 5*n + 1 + NumofCardtoExchange; i++)
     {
-        cout << "Now " << name <<"'s cards are: " << endl;
-        printHand (hand, suits, faces);
         Card a = drawCard(i, deck);
         cout << name << " has just drawn ("<< suits[a.suit] <<", " << faces[a.face] <<") \n";
         cout << "Does " << name << " want to keep this card?\n1) Yes\t0) No\n ==> Your choice: ";
@@ -59,9 +57,10 @@ void VoluntaryExchange(int ** hand, char* suits[], char* faces[], int deck[SUITS
             cin >> place;
             hand = exchangeCard(hand, a, place);
         }
+        if ( i == 5*n + NumofCardtoExchange) cout << "***END OF CHANGING***\n";
+        cout << "Now " << name <<"'s cards are: " << endl;
+        printHand (hand, suits, faces);
     }
-        cout << "*** END OF CHANGING ***\nNow " << name <<"'s cards are: " << endl;
-        printHand ( hand, suits, faces );
 }
 
 void changeCards(int **hand, int deck[SUITS][FACES], char* suits[], char* faces[], int numofPlayers, string name)

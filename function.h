@@ -60,7 +60,7 @@ int ** generateMatrix ( int row, int col);
 //Menu
 void OnePlayer( int **hand, char* suits[], char* faces[], int deck[SUITS][FACES] );
 void Menu(int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES]);
-void MultiplePlayer( int*** Players, int n, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES] );
+void MultiplePlayer( int*** Players, int numsofPlayers, char* suits[SUITS], char* faces[FACES], int deck[SUITS][FACES], int hasDealer);
 bool checkinput( int choice, int Begin, int End );
 void handle_input( int &choice, int Begin, int End );
 
