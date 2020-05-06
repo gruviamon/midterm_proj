@@ -204,7 +204,7 @@ void Menu( int &choice, char* suits[SUITS], char* faces[FACES], int deck[SUITS][
         case 4:
             {
                 int n, num;
-                cout << "Number of Players (0 <= n <= 9) : ";
+                cout << "The n + 1 Player will be Dealer\nNumber of Players (0 <= n <= 9) : ";
                 cin >> n;
                 handle_input(n, 0, 9);
                 int ***Players = dealingForHands_2(deck, n + 1); // n players + 1 Dealer

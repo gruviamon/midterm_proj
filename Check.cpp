@@ -10,7 +10,6 @@ int* generate_suitsCount (int **hand)
     {
         for ( int j = 0; j < SUITS; j++ )
         {
-            //cout << hand[0][i] << ' ' << j << endl;
             if ( suits[ hand[0][i] ] == suits[j] )
             {
                 suitsCount[j]++;

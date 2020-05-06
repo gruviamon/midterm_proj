@@ -10,7 +10,7 @@ int main()
 
     do
     {
-        cout << "--- WELCOME TO THE PLAY CARDS GAME ---" << endl;
+        cout << "--- WELCOME TO THE 5-CARD POKER GAME ---" << endl;
         Menu(choice, suits, faces, deck);
         system("pause");
         system("cls");
